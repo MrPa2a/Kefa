@@ -1,0 +1,8 @@
+{
+  "name": "Kefa_v0",
+  "app_id": "",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
