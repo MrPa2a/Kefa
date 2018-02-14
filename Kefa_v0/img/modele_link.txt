@@ -1,0 +1,3 @@
+https://market.ionicframework.com/themes/location
+
+https://market.ionicframework.com/themes/bazaar-ionic-multi-app-template
