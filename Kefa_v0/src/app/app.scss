@@ -14,3 +14,40 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+.md {
+    #filtrebutton {
+        box-shadow: none;
+    }
+}
+
+.ios, .md {
+    home-page {
+    }
+    .question {
+        font-size: 25px;
+        color: #3476b2;
+        margin: 30px auto;
+        text-align: center;
+
+    }
+    .proposition {
+        font-size: 12px;
+        color : gray;
+    }
+
+
+
+    ::-webkit-scrollbar {
+        width: 0px;  /* remove scrollbar space */
+        background: transparent;  /* optional: just make scrollbar invisible */
+      }
+      /* optional: show position indicator in red */
+      ::-webkit-scrollbar-thumb {
+          background: #379bb6;
+      }
+
+    #filtrebutton {
+        background: linear-gradient(90deg,#3bc2ba, #3476b2);
+    }
+}
