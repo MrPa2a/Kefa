@@ -1,6 +1,8 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
+import { FirebaseProvider } from './../../providers/firebase/firebase';
+import { AngularFireList} from 'angularfire2/database';
 
 declare var google;
 
@@ -11,10 +13,25 @@ declare var google;
 export class HomePage {
 
   @ViewChild('map') mapElement: ElementRef;
+  placesItems: any;
+  newItem = '';
   map: any;
 
-  constructor(public navCtrl: NavController, public geolocation: Geolocation) {
+  /*constructor(public navCtrl: NavController, public geolocation: Geolocation) {
 
+  }*/
+
+  constructor(public navCtrl: NavController, public firebaseProvider: FirebaseProvider, public geolocation: Geolocation) {
+    this.placesItems = this.firebaseProvider.getPlacesItems();
+    console.log("La liste c'est" +this.placesItems);
+  }
+ 
+  addItem() {
+    this.firebaseProvider.addItem(this.newItem);
+  }
+ 
+  removeItem(id) {
+    this.firebaseProvider.removeItem(id);
   }
 
   ionViewDidLoad() {
