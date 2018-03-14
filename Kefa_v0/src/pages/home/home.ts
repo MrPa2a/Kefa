@@ -1,6 +1,9 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
+import { FirebaseProvider } from './../../providers/firebase/firebase';
+import { FirebaseListObservable } from 'angularfire2/database';
+
 
 declare var google;
 
@@ -12,9 +15,33 @@ export class HomePage {
 
   @ViewChild('map') mapElement: ElementRef;
   map: any;
+  placesItems: FirebaseListObservable<any[]>;
+  newItem = '';
 
-  constructor(public navCtrl: NavController, public geolocation: Geolocation) {
+  public items: Array<any> = [];
+  public itemRef: firebase.database.Reference = firebase.database().ref('/placesItems');
 
+  constructor(public navCtrl: NavController, public geolocation: Geolocation, public firebaseProvider: FirebaseProvider) {
+    this.placesItems = this._firebaseProvider.getPlacesItems();
+    //this.placesItems = this._firebaseService.getResources();
+  }
+
+  ionViewDidLoad() {
+  this.itemRef.on('value', itemSnapshot => {
+    this.items = [];
+    itemSnapshot.forEach( itemSnap => {
+      this.items.push(itemSnap.val());
+      return false;
+    });
+  });
+}
+
+  addItem() {
+    this.firebaseProvider.addItem(this.newItem);
+  }
+
+  removeItem(id) {
+    this.firebaseProvider.removeItem(id);
   }
 
   ionViewDidLoad() {
