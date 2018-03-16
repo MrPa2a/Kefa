@@ -1,0 +1,28 @@
+{
+ "placesItems" : [
+  {
+    "name" : "Chez Vinc",
+    "address" : "34 Avenue Saint-Augustin, 06200 Nice",
+    "url" : "",
+    "image" : ""
+  },
+  {
+    "name" : "Chez Sylvain",
+    "address" : "301 Promenade des anglais, 06200 Nice",
+    "url" : "",
+    "image" : ""
+  },
+  {
+    "name" : "Chez P-A",
+    "address" : "16 Route de Grenoble, 06200 Nice",
+    "url" : "",
+    "image" : ""
+  },
+  {
+    "name" : "Jardin Botanique",
+    "address" : "78 Avenue Corniche Fleurie, 06000 Nice",
+    "url" : "",
+    "image" : "/img/element_display/jardin_botanique.jpeg"
+  }  
+ ]
+}
