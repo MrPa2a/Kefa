@@ -21,8 +21,7 @@ page-home {
       }
 
       ::-webkit-scrollbar {
-        width: 0px;  /* remove scrollbar space */
-        background: transparent;  /* optional: just make scrollbar invisible */
+        display: none;
       }
       /* optional: show position indicator in red */
       ::-webkit-scrollbar-thumb {
@@ -56,6 +55,10 @@ page-home {
         background: url("../../assets/imgs/filter.png") no-repeat left;
         height:18px;
         width:18px;
+      }
+
+      .swiper-pagination-bullet {
+        display: none;
       }
     }
 }

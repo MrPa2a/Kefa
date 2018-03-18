@@ -16,12 +16,39 @@
 </ion-header>
 
 <ion-content>
-  <!--<h3>Test de la map</h3>-->
   <div #map id="map"></div>
-</ion-content>
+  <div class="container-places">
+    <ion-slides pager (ionSlideDidChange)="slideChanged()">
+      <ion-slide *ngFor="let place of placesItems | async" class="slide-places">
+        <ion-card>
+          <!--<img src="assets/img/oui.jpg"/>-->
 
-<ion-content>
-  <ion-row>
+          <ion-card-content>
+            <ion-card-title>
+              {{ place.name }}
+            </ion-card-title>
+            <p>
+              {{ place.address }}
+            </p>
+          </ion-card-content>
+
+          <ion-item>
+            <ion-icon name='musical-notes' item-start style="color: #d03e84"></ion-icon>
+            Albums
+            <ion-badge item-end>9</ion-badge>
+          </ion-item>
+
+          <ion-item>
+            <ion-icon name='logo-twitter' item-start style="color: #55acee"></ion-icon>
+            Followers
+            <ion-badge item-end>260k</ion-badge>
+          </ion-item>
+        </ion-card>
+      </ion-slide>
+    </ion-slides>
+  </div>
+
+  <!--<ion-row>
     <ion-col col-9>
       <ion-item>
         <ion-input type="text" [(ngModel)]="newItem" placeholder="New Shopping item"></ion-input>
@@ -31,7 +58,7 @@
       <button ion-button (click)="addItem()">Add!</button>
     </ion-col>
   </ion-row>
- 
+
   <ion-list>
     <ion-item-sliding *ngFor="let item of placesItems | async">
       <ion-item>
@@ -43,5 +70,5 @@
         <button ion-button color="danger" icon-only (click)="removeItem(item.$key)"><ion-icon name="trash"></ion-icon></button>
       </ion-item-options>
     </ion-item-sliding>
-  </ion-list>
+  </ion-list>-->
 </ion-content>
