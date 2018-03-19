@@ -23,38 +23,32 @@ page-home {
       ::-webkit-scrollbar {
         display: none;
       }
-      /* optional: show position indicator in red */
-      ::-webkit-scrollbar-thumb {
-          background: #379bb6;
-      }
 
       #map {
         width: 100%;
         height: 60%;
       }
 
-      #mylogo {
-        height: 30px;
-        width: 25px;
-        background: url("../../assets/imgs/logohead.png") no-repeat;
-        float: left;
+      #container-logo {
+        display: inline-block;
       }
 
-      #mylogotxt {
+      #app-logo {
+        float: left;
+        height: 30px;
+        width: 25px;
+      }
+
+      #app-name {
         float: right;
         color : #379bb6;
         margin-left: 5px;
         line-height: 30px;
       }
 
-      #tophead{
-        display : inline-block;
-      }
-
-      #filter {
-        background: url("../../assets/imgs/filter.png") no-repeat left;
-        height:18px;
-        width:18px;
+      #button-filter {
+        height: 20px;
+        width: 20px;
       }
 
       .swiper-pagination-bullet {

@@ -1,17 +1,14 @@
 <ion-header>
   <ion-navbar>
     <button ion-button menuToggle>
-      <div id="filter" name="menu"></div>
+      <img id="button-filter" name="menu" src="assets/imgs/filter.png" />
     </button>
-    <ion-title>
-      <div id="tophead">
-          <div id="mylogo"></div>
-          <div id="mylogotxt">Kefa</div>
+    <ion-title text-center>
+      <div id="container-logo">
+          <img id="app-logo" src="assets/imgs/logo-small.png" />
+          <div id="app-name">Kefa</div>
       </div>
     </ion-title>
-    <!--<ion-buttons end>
-      <button ion-button (click)="addMarker()"><ion-icon name="add"></ion-icon>Add Marker</button>
-    </ion-buttons>-->
   </ion-navbar>
 </ion-header>
 
@@ -19,7 +16,7 @@
   <div #map id="map"></div>
   <div class="container-places">
     <ion-slides pager (ionSlideDidChange)="slideChanged()">
-      <ion-slide *ngFor="let place of placesItems | async" class="slide-places">
+      <ion-slide *ngFor="let place of placesItems" class="slide-places">
         <ion-card>
           <!--<img src="assets/img/oui.jpg"/>-->
 
@@ -33,14 +30,14 @@
           </ion-card-content>
 
           <ion-item>
-            <ion-icon name='musical-notes' item-start style="color: #d03e84"></ion-icon>
-            Albums
+            <ion-icon name='star' item-start style="color: #55acee"></ion-icon>
+            Note moyenne
             <ion-badge item-end>9</ion-badge>
           </ion-item>
 
           <ion-item>
-            <ion-icon name='logo-twitter' item-start style="color: #55acee"></ion-icon>
-            Followers
+            <ion-icon name='stats' item-start></ion-icon>
+            Avis
             <ion-badge item-end>260k</ion-badge>
           </ion-item>
         </ion-card>

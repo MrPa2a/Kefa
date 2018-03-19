@@ -1,8 +1,7 @@
-import { Component, ViewChild, ElementRef, NgModule, Injectable } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController, Slides } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { FirebaseProvider } from './../../providers/firebase/firebase';
-import { AngularFireList } from 'angularfire2/database';
 import { NativeGeocoder, NativeGeocoderForwardResult } from '@ionic-native/native-geocoder';
 
 declare var google;
@@ -30,22 +29,13 @@ export class HomePage {
   placesItems: any;
   newItem = '';
   map: any;
-  markers: any;
+  marker: any;
 
   constructor(public firebaseProvider: FirebaseProvider, public navCtrl: NavController, public geolocation: Geolocation, public nativeGeocoder: NativeGeocoder) {
-    this.placesItems = this.firebaseProvider.getPlacesItems();
-  }
-
-  getObjectWithoutKnowingKey(data) {
-    let objects = [];
-
-    for (var propName in data) {
-        if (data.hasOwnProperty(propName)) {
-            objects.push(data[propName]);
-        }
-    }
-
-    return objects;
+    this.firebaseProvider.getPlacesItems().subscribe(res => {
+      this.placesItems = res
+      this.addMarkerWithPlace(this.placesItems[0]);
+    });
   }
 
   addItem() {
@@ -60,9 +50,10 @@ export class HomePage {
     this.loadMap();
   }
 
-  addMarkerWithPlace(place: PlaceData) {
+  addMarkerWithPlace(place) {
     this.getCoordinatesFromAdress(place.address).then((coord) => {
-      this.addMarker(coord);
+      this.addMarker(coord)
+      this.map.panTo(new google.maps.LatLng(coord.lat, coord.lng))
     }, (err) => {
       console.log('Error at HomePage.addMarkerWithPlace() : ' + err)
     });
@@ -70,8 +61,7 @@ export class HomePage {
 
   slideChanged() {
     let currentIndex = this.slides.getActiveIndex();
-    let array = this.getObjectWithoutKnowingKey(this.placesItems);
-    this.addMarkerWithPlace(array[currentIndex]);
+    this.addMarkerWithPlace(this.placesItems[currentIndex]);
   }
 
   loadMap() : void {
@@ -92,6 +82,12 @@ export class HomePage {
     }
 
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+
+    this.marker = new google.maps.Marker({
+      map: this.map,
+      animation: google.maps.Animation.DROP,
+      position: latLng
+    });
   }
 
   getCoordinatesFromAdress(address: string) : Promise<any> {
@@ -110,27 +106,8 @@ export class HomePage {
   }
 
   addMarker(coord: Coordinates) : void {
-    if (coord === undefined) {
-      let val1 = Math.floor(Math.random()*90);
-      let val2 = Math.floor(Math.random()*90);
+    var latLng = new google.maps.LatLng(coord.lat, coord.lng)
 
-      coord = {
-        lat: val1,
-        lng: val2
-      }
-    }
-
-    var myLatLng = new google.maps.LatLng(coord.lat, coord.lng)
-
-    if (this.markers === undefined) {
-      this.markers = new google.maps.Marker({
-        map: this.map,
-        animation: google.maps.Animation.DROP,
-        position: myLatLng
-      });
-    }
-    else {
-      this.markers.setPosition(myLatLng);
-    }
+    this.marker.setPosition(latLng);
   }
 }
