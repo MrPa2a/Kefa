@@ -1,45 +1,84 @@
 <ion-header>
   <ion-navbar>
     <button ion-button menuToggle>
-      <img id="button-filter" name="menu" src="assets/imgs/filter.png" />
+      <img id="button-filter" name="menu" src="assets/imgs/filter.png"/>
     </button>
     <ion-title text-center>
       <div id="container-logo">
-          <img id="app-logo" src="assets/imgs/logo-small.png" />
-          <div id="app-name">Kefa</div>
+        <img id="app-logo" src="assets/imgs/logo-small.png"/>
+        <div id="app-name">Kefa</div>
       </div>
     </ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="cards-bg">
   <div #map id="map"></div>
   <div class="container-places">
     <ion-slides pager (ionSlideDidChange)="slideChanged()">
       <ion-slide *ngFor="let place of placesItems" class="slide-places">
         <ion-card>
-          <!--<img src="assets/img/oui.jpg"/>-->
+
+          <img style="width: 100%" src="../../assets/imgs/jardin_botanique.png"/>
 
           <ion-card-content>
             <ion-card-title>
               {{ place.name }}
             </ion-card-title>
-            <p>
+            <h2>
               {{ place.address }}
+            </h2>
+            <p style="align-content: left">
+              C'est vraiment un endroit incroyable, vous devriez y faire un tour !
             </p>
           </ion-card-content>
 
-          <ion-item>
-            <ion-icon name='star' item-start style="color: #55acee"></ion-icon>
-            Note moyenne
-            <ion-badge item-end>9</ion-badge>
-          </ion-item>
+          <ion-row text-left="">
+            <ion-col>
+              <button ion-button item-start clear small color="danger" icon-start>
+                <ion-icon name='star'></ion-icon>
+                Note moyenne
+                <ion-badge item-end color="danger" outline style="margin-left: 5px;">4.5</ion-badge>
+              </button>
+            </ion-col>
+            <ion-col text-center>
 
-          <ion-item>
-            <ion-icon name='stats' item-start></ion-icon>
-            Avis
-            <ion-badge item-end>260k</ion-badge>
-          </ion-item>
+            </ion-col>
+            <ion-col text-right>
+              <button ion-button item-end clear small color="danger" icon-start>
+                <ion-icon name='stats'></ion-icon>
+                Avis
+                <ion-badge item-end color="danger" outline style="margin-left: 5px;">25k</ion-badge>
+              </button>
+            </ion-col>
+          </ion-row>
+
+          <!--
+         <img src="assets/img/oui.jpg"/>
+
+         <ion-card-content>
+           <ion-card-title>
+             {{ place.name }}
+           </ion-card-title>
+           <p>
+             {{ place.address }}
+           </p>
+         </ion-card-content>
+
+           <ion-item>
+             <ion-icon name='star' item-start style="color: #55acee"></ion-icon>
+             Note moyenne
+             <ion-badge item-end>9</ion-badge>
+           </ion-item>
+
+           <ion-item>
+             <ion-icon name='stats' item-start></ion-icon>
+             Avis
+           <ion-badge item-end>260k</ion-badge>
+         </ion-item>
+
+         -->
+
         </ion-card>
       </ion-slide>
     </ion-slides>
