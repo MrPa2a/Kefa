@@ -60,7 +60,6 @@ page-home {
      }
 
     .fab-icon {
-      margin-top: 5px;
       margin-right: 5px;
     }
 
@@ -70,8 +69,26 @@ page-home {
     }
 
     .container-card {
+      border-radius: 5px;
       display: flex;
       flex-direction: column;
+      min-height: 40vh;
+    }
+
+    .container-card:before {
+      position: absolute;
+      content:" ";
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      display: none;
+      z-index:0;
+    }
+
+    .container-card:before{
+      display: block;
+      background: linear-gradient(rgba(0,0,0,0.5), rgba(255,255,255,0), rgba(0,0,0,0.5));
     }
 
     .info-note {
@@ -96,17 +113,12 @@ page-home {
 
     .card-title {
       font-weight: bold;
-      color: #fff;
+      color: white;
     }
 
-    .card-address {
-      color: lightgrey;
-    }
-
-    .card-subtitle {
-      color: #fff;
+    .card-infos * {
+      color: white;
     }
 
   }
 }
-

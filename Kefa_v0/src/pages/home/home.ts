@@ -35,6 +35,8 @@ export class HomePage {
     this.firebaseProvider.getPlacesItems().subscribe(res => {
       this.placesItems = res
       this.addMarkerWithPlace(this.placesItems[0]);
+    }, err => {
+      console.log("ERROR : " + err);
     });
   }
 

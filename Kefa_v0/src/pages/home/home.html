@@ -17,9 +17,9 @@
   <div class="container-places">
     <ion-slides pager (ionSlideDidChange)="slideChanged()">
       <ion-slide *ngFor="let place of placesItems" class="slide-places">
-        <ion-card style="background: url('../../assets/imgs/jardin_botanique.png') no-repeat center; height: 50vh;" class="card-container">
+        <ion-card [ngStyle]="{'background-image': 'url(' + place.image + ')'}" class="container-card">
 
-          <!-- <img style="width: 100%;" src="/> -->
+          <!--<img style="width: 100%;" [src]="place.image" />-->
 
           <div class="card-icon">
 
@@ -46,107 +46,13 @@
             </ion-fab>
           </div>
 
-          <div class="card-infos">
-            <div class="card-title">{{ place.name }}</div>
-
-            <div class="card-address">{{ place.address }}</div>
-
-            <div class="card-subtitle">{{ place.description }}</div>
+          <div class="card-infos" margin>
+            <ion-title class="card-title">{{ place.name }}</ion-title>
+            <p class="card-address">{{ place.address }}</p>
+            <p class="card-subtitle">{{ place.description }}</p>
           </div>
-
-
-          <!--
-          <img style="width: 100%" src="../../assets/imgs/jardin_botanique.png"/>
-          <ion-fab right top class="fab-icon">
-            <button ion-fab small clear outline color="kefa">
-              <ion-icon name="leaf"></ion-icon>
-            </button>
-          </ion-fab>
-
-          <ion-card-content>
-            <ion-card-title>
-              {{ place.name }}
-            </ion-card-title>
-            <h2>
-              {{ place.address }}
-            </h2>
-            <p style="align-content: left">
-              {{ place.description }}
-            </p>
-          </ion-card-content>
-
-          <ion-row text-left="">
-            <ion-col>
-              <button ion-button item-start clear small color="kefa" icon-start>
-                <ion-icon name='star'></ion-icon>
-                Note moyenne
-                <ion-badge item-end color="kefa" outline style="margin-left: 5px;">4.5</ion-badge>
-              </button>
-            </ion-col>
-            <ion-col text-center>
-
-            </ion-col>
-            <ion-col text-right>
-              <button ion-button item-end clear small color="kefa" icon-start>
-                <ion-icon name='stats'></ion-icon>
-                Avis
-                <ion-badge item-end color="kefa" outline style="margin-left: 5px;">25k</ion-badge>
-              </button>
-            </ion-col>
-          </ion-row>
-
-          <!--
-         <img src="assets/img/oui.jpg"/>
-
-         <ion-card-content>
-           <ion-card-title>
-             {{ place.name }}
-           </ion-card-title>
-           <p>
-             {{ place.address }}
-           </p>
-         </ion-card-content>
-
-           <ion-item>
-             <ion-icon name='star' item-start style="color: #55acee"></ion-icon>
-             Note moyenne
-             <ion-badge item-end>9</ion-badge>
-           </ion-item>
-
-           <ion-item>
-             <ion-icon name='stats' item-start></ion-icon>
-             Avis
-           <ion-badge item-end>260k</ion-badge>
-         </ion-item>
-
-         -->
-
         </ion-card>
       </ion-slide>
     </ion-slides>
   </div>
-
-  <!--<ion-row>
-    <ion-col col-9>
-      <ion-item>
-        <ion-input type="text" [(ngModel)]="newItem" placeholder="New Shopping item"></ion-input>
-      </ion-item>
-    </ion-col>
-    <ion-col>
-      <button ion-button (click)="addItem()">Add!</button>
-    </ion-col>
-  </ion-row>
-
-  <ion-list>
-    <ion-item-sliding *ngFor="let item of placesItems | async">
-      <ion-item>
-        {{ item.name }}
-        {{ item.address }}
-
-      </ion-item>
-      <ion-item-options side="right">
-        <button ion-button color="danger" icon-only (click)="removeItem(item.$key)"><ion-icon name="trash"></ion-icon></button>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>-->
 </ion-content>
