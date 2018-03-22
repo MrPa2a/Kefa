@@ -19,23 +19,21 @@
       <ion-slide *ngFor="let place of placesItems" class="slide-places">
         <ion-card [ngStyle]="{'background-image': 'url(' + place.image + ')'}" class="container-card">
 
-          <!--<img style="width: 100%;" [src]="place.image" />-->
-
           <div class="card-icon">
 
             <div class="info-note">
-              <button ion-button item-start clear small color="light" icon-start >
+              <button ion-button item-start clear small color="light" icon-start>
                 <ion-icon name='star'></ion-icon>
                 Note moyenne
-                <ion-badge item-end color="kefa" outline style="margin-left: 5px;">4.5</ion-badge>
+                <ion-badge item-end color="kefa" outline style="margin-left: 5px;">{{ place.averageNote }}</ion-badge>
               </button>
             </div>
 
             <div class="info-avis">
-              <button ion-button item-end clear small color="light" icon-start >
+              <button ion-button item-end clear small color="light" icon-start>
                 <ion-icon name='stats'></ion-icon>
                 Avis
-                <ion-badge item-end color="kefa" outline style="margin-left: 5px;">25k</ion-badge>
+                <ion-badge item-end color="kefa" outline style="margin-left: 5px;">{{ place.sumOpinions }}</ion-badge>
               </button>
             </div>
 
@@ -47,9 +45,9 @@
           </div>
 
           <div class="card-infos" margin>
-            <ion-title class="card-title">{{ place.name }}</ion-title>
-            <p class="card-address">{{ place.address }}</p>
-            <p class="card-subtitle">{{ place.description }}</p>
+            <h2>{{ place.name }}</h2>
+            <p>{{ place.address }}</p>
+            <p>{{ place.description }}</p>
           </div>
         </ion-card>
       </ion-slide>

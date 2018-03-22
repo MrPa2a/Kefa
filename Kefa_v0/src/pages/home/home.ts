@@ -7,8 +7,6 @@ import { NativeGeocoder, NativeGeocoderForwardResult } from '@ionic-native/nativ
 declare var google;
 
 export interface PlaceData {
-  name: string,
-  address: string
 }
 export interface Coordinates {
   lat: number,
@@ -27,38 +25,52 @@ export class HomePage {
   @ViewChild(Slides) slides: Slides;
 
   placesItems: any;
-  newItem = '';
   map: any;
   marker: any;
 
   constructor(public firebaseProvider: FirebaseProvider, public navCtrl: NavController, public geolocation: Geolocation, public nativeGeocoder: NativeGeocoder) {
     this.firebaseProvider.getPlacesItems().subscribe(res => {
       this.placesItems = res
+      console.log(this.placesItems)
+      this.computeAverageNote();
       this.addMarkerWithPlace(this.placesItems[0]);
+
     }, err => {
       console.log("ERROR : " + err);
     });
-  }
-
-  addItem() {
-    this.firebaseProvider.addItem(this.newItem);
-  }
-
-  removeItem(id) {
-    this.firebaseProvider.removeItem(id);
   }
 
   ionViewDidLoad() {
     this.loadMap();
   }
 
-  addMarkerWithPlace(place) {
+  addMarkerWithPlace(place) : void {
     this.getCoordinatesFromAdress(place.address).then((coord) => {
       this.addMarker(coord)
       this.map.panTo(new google.maps.LatLng(coord.lat, coord.lng))
     }, (err) => {
       console.log('Error at HomePage.addMarkerWithPlace() : ' + err)
     });
+  }
+
+  computeAverageNote() : void {
+    console.log('compute ...')
+
+    for (let element of this.placesItems) {
+      element['averageNote'] = "Pas de notes"
+      element['sumOpinions'] = "0"
+
+      if (element.opinions != undefined) {
+        let sum = 0
+
+        for (let opinion of element.opinions) {
+          sum += +opinion.note;
+        }
+
+        element['averageNote'] = sum / element.opinions.length
+        element['sumOpinions'] = element.opinions.length
+      }
+    }
   }
 
   slideChanged() {
