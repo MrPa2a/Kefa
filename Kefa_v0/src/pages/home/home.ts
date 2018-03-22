@@ -3,6 +3,7 @@ import { NavController, Slides } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { FirebaseProvider } from './../../providers/firebase/firebase';
 import { NativeGeocoder, NativeGeocoderForwardResult } from '@ionic-native/native-geocoder';
+import { ElementPage} from "../element/element";
 
 declare var google;
 
@@ -24,6 +25,8 @@ export class HomePage {
   @ViewChild('map') mapElement: ElementRef;
   @ViewChild(Slides) slides: Slides;
 
+  elementPage = ElementPage;
+
   placesItems: any;
   map: any;
   marker: any;
@@ -42,6 +45,18 @@ export class HomePage {
 
   ionViewDidLoad() {
     this.loadMap();
+  }
+
+  showElement(place){
+    this.navCtrl.push(ElementPage, {
+      placeName: place.name,
+      placeImage: place.image,
+      placeDescription: place.description,
+      placeAddress: place.address,
+      placeNote: place.averageNote,
+      placeOpinion: place.sumOpinions
+
+    });
   }
 
   addMarkerWithPlace(place) : void {

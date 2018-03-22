@@ -12,11 +12,11 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content class="cards-bg">
+<ion-content class="cards-bg" >
   <div #map id="map"></div>
   <div class="container-places">
     <ion-slides pager (ionSlideDidChange)="slideChanged()">
-      <ion-slide *ngFor="let place of placesItems" class="slide-places">
+      <ion-slide *ngFor="let place of placesItems" class="slide-places" (click)="showElement(place)">
         <ion-card [ngStyle]="{'background-image': 'url(' + place.image + ')'}" class="container-card">
 
           <div class="card-icon">
