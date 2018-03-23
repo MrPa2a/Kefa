@@ -47,9 +47,13 @@ export class HomePage {
     this.loadMap();
     this.firebaseProvider.getPlacesItems().subscribe(res => {
       this.placesItems = res
+      console.log('REUSSI')
       this.computeAverageNote();
+      console.log('REUSSI1')
       this.addMarkerWithPlace(this.placesItems[0]);
+      console.log('REUSSI2')
       this.filterByDistance()
+      console.log('REUSSI3')
     }, err => {
       console.log("Error at HomePage.ionViewDidLoad() : " + err);
     });

@@ -54,8 +54,8 @@ export class ElementPage {
     let size = (this.place.opinions) ? this.place.opinions.length : 0
 
     if (this.form != undefined && this.form.comment != undefined && this.form.note != undefined) {
-      this.firebaseProvider.addComment(this.index, size + 1, {
-        name: "Vincent Creusy",
+      this.firebaseProvider.addComment(this.index, size, {
+        person: "Vincent Creusy",
         description: this.form.comment,
         note: this.form.note
       })

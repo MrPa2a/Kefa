@@ -11,7 +11,8 @@ export class FirebaseProvider {
   }
 
   addComment(id, newId, comment) {
-    this.afd.list('/placesItems/' + id + '/opinions/' + newId).push(comment);
+    let opinions = this.afd.list('/placesItems/' + id + '/opinions/')
+    this.afd.database.ref().child('placesItems').child(id).child('opinions').child(newId).set(comment)
   }
 
   addItem(name) {
