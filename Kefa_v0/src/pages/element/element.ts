@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { FirebaseProvider } from './../../providers/firebase/firebase';
 
 /**
  * Generated class for the ElementPage page.
@@ -8,6 +9,11 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
  * Ionic pages and navigation.
  */
 
+ export interface FormData {
+   note: string,
+   comment: string
+ }
+
 @IonicPage()
 @Component({
   selector: 'page-element',
@@ -15,9 +21,12 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ElementPage {
   place: any;
+  index: number;
+  form: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.place = navParams.get('place');
+  constructor(public firebaseProvider: FirebaseProvider, public navCtrl: NavController, public navParams: NavParams) {
+    this.place = this.navParams.get('place')
+    this.index = this.navParams.get('index')
 
     if (this.place.opinions != undefined) {
       for (let opinion of this.place.opinions) {
@@ -32,10 +41,27 @@ export class ElementPage {
         }
       }
     }
+
+    this.form = new FormData();
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ElementPage');
+
   }
 
+  logForm() {
+    console.log('INDEX : ' + this.index)
+    let size = (this.place.opinions) ? this.place.opinions.length : 0
+
+    if (this.form != undefined && this.form.comment != undefined && this.form.note != undefined) {
+      this.firebaseProvider.addComment(this.index, size + 1, {
+        name: "Vincent Creusy",
+        description: this.form.comment,
+        note: this.form.note
+      })
+    }
+    else {
+      console.log('Il y a une erreur ...')
+    }
+  }
 }

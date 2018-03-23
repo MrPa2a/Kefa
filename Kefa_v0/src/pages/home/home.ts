@@ -3,12 +3,10 @@ import { NavController, Slides } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { FirebaseProvider } from './../../providers/firebase/firebase';
 import { NativeGeocoder, NativeGeocoderForwardResult } from '@ionic-native/native-geocoder';
-import { ElementPage} from "../element/element";
+import { ElementPage } from "../element/element";
 
 declare var google;
 
-export interface PlaceData {
-}
 export interface Coordinates {
   lat: number,
   lng: number
@@ -28,26 +26,59 @@ export class HomePage {
   elementPage = ElementPage;
 
   placesItems: any;
+  tempPlacesItems: any;
   map: any;
   marker: any;
+  userPosition: Coordinates;
+  range: number = undefined;
+  currentIndex: number = 0;
+
+  readonly defaultCoordinates: Coordinates = {
+    lat: 43.697233,
+    lng: 7.27023650000001
+  };
 
   constructor(public firebaseProvider: FirebaseProvider, public navCtrl: NavController, public geolocation: Geolocation, public nativeGeocoder: NativeGeocoder) {
+
+  }
+
+  ionViewDidLoad() {
+    this.userPosition = this.defaultCoordinates;
+    this.loadMap();
     this.firebaseProvider.getPlacesItems().subscribe(res => {
       this.placesItems = res
       this.computeAverageNote();
       this.addMarkerWithPlace(this.placesItems[0]);
+      this.filterByDistance()
     }, err => {
-      console.log("ERROR : " + err);
+      console.log("Error at HomePage.ionViewDidLoad() : " + err);
     });
   }
 
-  ionViewDidLoad() {
-    this.loadMap();
+  filterByDistance() : void {
+    console.log('filter')
+    if (this.range === undefined) {
+      this.tempPlacesItems = this.placesItems
+    }
+    else {
+      this.tempPlacesItems = new Array();
+
+      for (let place of this.placesItems) {
+        this.getCoordinatesFromAdress(place.address).then((position) => {
+          if (this.distanceOnMap(this.userPosition, position) < this.range) {
+            this.tempPlacesItems.push(place)
+          }
+        }, (err) => {
+          console.log("Error at HomePage.filterByDistance() : " + err)
+        });
+      }
+    }
   }
 
-  showElement(place){
+  showElement(place) : void {
     this.navCtrl.push(ElementPage, {
-      place: place
+      place: place,
+      index: this.currentIndex
     });
   }
 
@@ -79,21 +110,26 @@ export class HomePage {
     }
   }
 
-  slideChanged() {
-    let currentIndex = this.slides.getActiveIndex();
-    this.addMarkerWithPlace(this.placesItems[currentIndex]);
+  slideChanged() : void {
+    this.currentIndex = this.slides.getActiveIndex();
+    this.addMarkerWithPlace(this.placesItems[this.currentIndex]);
   }
 
   loadMap() : void {
     this.geolocation.getCurrentPosition().then((position) => {
-      this.createMap(position.coords.latitude, position.coords.longitude);
+      let coordinates = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      }
+      this.userPosition = coordinates
+      this.createMap(coordinates);
     }, (err) => {
-      this.createMap(43.697233, 7.27023650000001);
+      this.createMap(this.defaultCoordinates);
     })
   }
 
-  createMap(lat: number, lng: number) : void {
-    let latLng = new google.maps.LatLng(lat, lng);
+  createMap(coordinates: Coordinates) : void {
+    let latLng = new google.maps.LatLng(coordinates.lat, coordinates.lng);
 
     let mapOptions = {
       center: latLng,
@@ -110,6 +146,21 @@ export class HomePage {
     });
   }
 
+  degreeToRad(input) : number {
+    return (Math.PI * input) / 180;
+  }
+
+  distanceOnMap(position1: Coordinates, position2: Coordinates) : number {
+    let R = 6378000
+
+    let lat_a = this.degreeToRad(position1.lat);
+    let lon_a = this.degreeToRad(position1.lng);
+    let lat_b = this.degreeToRad(position2.lat);
+    let lon_b = this.degreeToRad(position2.lng);
+
+    return R * (Math.PI/2 - Math.asin( Math.sin(lat_b) * Math.sin(lat_a) + Math.cos(lon_b - lon_a) * Math.cos(lat_b) * Math.cos(lat_a)))
+  }
+
   getCoordinatesFromAdress(address: string) : Promise<any> {
     return new Promise((resolve, reject) => {
       this.nativeGeocoder.forwardGeocode(address)
@@ -119,8 +170,9 @@ export class HomePage {
           lng: coordinates[0].longitude
         })
       })
-      .catch((error: any) => {
-        reject(error)
+      .catch((err: any) => {
+        console.log('Error at HomePage.getCoordinatesFromAdress() : ' + err)
+        reject(err)
       });
     });
   }

@@ -16,7 +16,17 @@
   <div #map id="map"></div>
   <div class="container-places">
     <ion-slides pager (ionSlideDidChange)="slideChanged()">
-      <ion-slide *ngFor="let place of placesItems" (click)="showElement(place)">
+      <ion-card *ngIf="!tempPlacesItems">
+        <ion-card-header>
+          Pas de résultats
+        </ion-card-header>
+
+        <ion-card-content>
+          Nous n'avons pas trouvé d'activités à moins de {{ range }} mètres de vous.
+        </ion-card-content>
+      </ion-card>
+
+      <ion-slide *ngFor="let place of tempPlacesItems" (click)="showElement(place)">
         <ion-card [ngStyle]="{'background-image': 'url(' + place.image + ')'}" class="container-card">
 
           <div class="card-icon">
@@ -37,9 +47,9 @@
               </button>
             </div>
 
-            <ion-fab right top class="fab-icon">
+            <ion-fab *ngIf="place.type" right top class="fab-icon">
               <button ion-fab small clear outline color="kefa">
-                <ion-icon name="leaf"></ion-icon>
+                <ion-icon name="{{place.type}}"></ion-icon>
               </button>
             </ion-fab>
           </div>

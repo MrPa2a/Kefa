@@ -34,9 +34,9 @@
         </button>
       </div>
 
-      <ion-fab right top class="fab-icon">
+      <ion-fab *ngIf="place.type" right top class="fab-icon">
         <button ion-fab small clear outline color="kefa">
-          <ion-icon name="leaf"></ion-icon>
+          <ion-icon name="{{place.type}}"></ion-icon>
         </button>
       </ion-fab>
     </div>
@@ -46,6 +46,16 @@
       <p>{{ place.address }}</p>
       <p>{{ place.description }}</p>
     </div>
+  </ion-card>
+
+  <ion-card *ngIf="!place.opinions">
+    <ion-card-header>
+      Pas de commentaires
+    </ion-card-header>
+
+    <ion-card-content>
+      Il n'y a pas encore de commentaires pour cette activité.
+    </ion-card-content>
   </ion-card>
 
   <ion-card *ngFor="let opinion of place.opinions">
@@ -60,4 +70,17 @@
       <p *ngIf="!opinion.description" class="opinion-no-comment">Cette personne n'a pas laissé de commentaire.</p>
     </ion-card-content>
   </ion-card>
+
+  <form (ngSubmit)="logForm()" margin>
+    <h2>Ajouter un commentaire</h2>
+    <ion-item>
+      <ion-label>Note</ion-label>
+      <ion-input type="text" [(ngModel)]="form.note" name="title"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Commentaire</ion-label>
+      <ion-textarea [(ngModel)]="form.comment" name="description"></ion-textarea>
+    </ion-item>
+    <button ion-button type="submit" block>Ajouter le commentaire</button>
+  </form>
 </ion-content>

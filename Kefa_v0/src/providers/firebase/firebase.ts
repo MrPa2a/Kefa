@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase} from 'angularfire2/database';
-import { PlaceData } from '../../pages/home/home';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 @Injectable()
 export class FirebaseProvider {
@@ -8,7 +7,11 @@ export class FirebaseProvider {
   constructor(public afd: AngularFireDatabase) { }
 
   getPlacesItems() {
-    return this.afd.list<PlaceData>('/placesItems/').valueChanges();
+    return this.afd.list<any>('/placesItems/').valueChanges();
+  }
+
+  addComment(id, newId, comment) {
+    this.afd.list('/placesItems/' + id + '/opinions/' + newId).push(comment);
   }
 
   addItem(name) {
