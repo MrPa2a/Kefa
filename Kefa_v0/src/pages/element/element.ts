@@ -14,22 +14,24 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'element.html',
 })
 export class ElementPage {
-
-  placeName: null;
-  placeImage: null;
-  placeDescription: null;
-  placeAddress: null;
-  placeNote: null;
-  placeOpinion: null;
+  place: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.placeName = navParams.get('placeName');
-    this.placeImage = navParams.get('placeImage');
-    this.placeDescription = navParams.get('placeDescription');
-    this.placeAddress = navParams.get('placeAddress');
-    this.placeNote = navParams.get('placeNote');
-    this.placeOpinion = navParams.get('placeOpinion');
+    this.place = navParams.get('place');
 
+    if (this.place.opinions != undefined) {
+      for (let opinion of this.place.opinions) {
+        opinion['numberOfStars'] = new Array<number>();
+        opinion['numberOfEmptyStars'] = new Array<number>();
+
+        for (let i = 0; i < opinion['note']; i++) {
+          opinion['numberOfStars'].push(i);
+        }
+        for (let i = 0; i < 5 - opinion['note']; i++) {
+          opinion['numberOfEmptyStars'].push(i);
+        }
+      }
+    }
   }
 
   ionViewDidLoad() {

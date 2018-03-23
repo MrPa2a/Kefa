@@ -7,12 +7,57 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{placeName}}</ion-title>
+    <ion-title>{{ place.name }}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
+  <ion-card [ngStyle]="{'background-image': 'url(' + place.image + ')'}" class="container-card">
 
+    <div class="card-icon">
+
+      <div class="info-note">
+        <button ion-button item-start clear small color="light" icon-start>
+          <ion-icon name='star'></ion-icon>
+          Note moyenne
+          <ion-badge item-end color="kefa" outline style="margin-left: 5px;">{{ place.averageNote }}</ion-badge>
+        </button>
+      </div>
+
+      <div class="info-avis">
+        <button ion-button item-end clear small color="light" icon-start>
+          <ion-icon name='stats'></ion-icon>
+          Avis
+          <ion-badge item-end color="kefa" outline style="margin-left: 5px;">{{ place.sumOpinions }}</ion-badge>
+        </button>
+      </div>
+
+      <ion-fab right top class="fab-icon">
+        <button ion-fab small clear outline color="kefa">
+          <ion-icon name="leaf"></ion-icon>
+        </button>
+      </ion-fab>
+    </div>
+
+    <div class="card-infos" margin>
+      <h2>{{ place.name }}</h2>
+      <p>{{ place.address }}</p>
+      <p>{{ place.description }}</p>
+    </div>
+  </ion-card>
+
+  <ion-card *ngFor="let opinion of place.opinions">
+    <ion-card-header color="kefa">
+      {{ opinion.person }}
+    </ion-card-header>
+
+    <ion-card-content class="card-note">
+      <div><ion-icon *ngFor="let i of opinion.numberOfStars" name='star' class="note-stars"></ion-icon></div>
+      <div><ion-icon *ngFor="let i of opinion.numberOfEmptyStars" name='star-outline' class="note-stars-outline"></ion-icon></div>
+      <p *ngIf="opinion.description">{{ opinion.description }}</p>
+      <p *ngIf="!opinion.description" class="opinion-no-comment">Cette personne n'a pas laissé de commentaire.</p>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

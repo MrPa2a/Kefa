@@ -34,10 +34,8 @@ export class HomePage {
   constructor(public firebaseProvider: FirebaseProvider, public navCtrl: NavController, public geolocation: Geolocation, public nativeGeocoder: NativeGeocoder) {
     this.firebaseProvider.getPlacesItems().subscribe(res => {
       this.placesItems = res
-      console.log(this.placesItems)
       this.computeAverageNote();
       this.addMarkerWithPlace(this.placesItems[0]);
-
     }, err => {
       console.log("ERROR : " + err);
     });
@@ -49,13 +47,7 @@ export class HomePage {
 
   showElement(place){
     this.navCtrl.push(ElementPage, {
-      placeName: place.name,
-      placeImage: place.image,
-      placeDescription: place.description,
-      placeAddress: place.address,
-      placeNote: place.averageNote,
-      placeOpinion: place.sumOpinions
-
+      place: place
     });
   }
 
@@ -69,20 +61,19 @@ export class HomePage {
   }
 
   computeAverageNote() : void {
-    console.log('compute ...')
-
     for (let element of this.placesItems) {
-      element['averageNote'] = "Pas de notes"
-      element['sumOpinions'] = "0"
-
-      if (element.opinions != undefined) {
+      if (element.opinions === undefined) {
+        element['averageNote'] = "Pas de notes"
+        element['sumOpinions'] = "0"
+      }
+      else {
         let sum = 0
 
         for (let opinion of element.opinions) {
           sum += +opinion.note;
         }
 
-        element['averageNote'] = sum / element.opinions.length
+        element['averageNote'] = +Math.round(sum / element.opinions.length)
         element['sumOpinions'] = element.opinions.length
       }
     }

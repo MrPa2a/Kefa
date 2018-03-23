@@ -57,7 +57,7 @@ page-home {
 
     .container-places {
        height: auto;
-     }
+    }
 
     ion-card {
       position: relative;
@@ -70,6 +70,7 @@ page-home {
       flex-direction: column;
       min-height: 40vh;
       background-position: center;
+      background-size: cover;
     }
 
     .container-card:before {

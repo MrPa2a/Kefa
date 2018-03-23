@@ -16,7 +16,7 @@
   <div #map id="map"></div>
   <div class="container-places">
     <ion-slides pager (ionSlideDidChange)="slideChanged()">
-      <ion-slide *ngFor="let place of placesItems" class="slide-places" (click)="showElement(place)">
+      <ion-slide *ngFor="let place of placesItems" (click)="showElement(place)">
         <ion-card [ngStyle]="{'background-image': 'url(' + place.image + ')'}" class="container-card">
 
           <div class="card-icon">
