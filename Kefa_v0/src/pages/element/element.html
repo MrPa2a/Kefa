@@ -74,7 +74,13 @@
   <form (ngSubmit)="logForm()" margin>
     <h2>Ajouter un commentaire</h2>
     <ion-item>
-      <ion-input type="text" [(ngModel)]="form.note" name="title" placeholder="Note"></ion-input>
+      <ion-select [(ngModel)]="form.note" interface="action-sheet" name="title" placeholder="Note" cancelText="Annuler">
+        <ion-option value="1">1</ion-option>
+        <ion-option value="2">2</ion-option>
+        <ion-option value="3">3</ion-option>
+        <ion-option value="4">4</ion-option>
+        <ion-option value="5">5</ion-option>
+      </ion-select>
     </ion-item>
     <ion-item>
       <ion-textarea [(ngModel)]="form.comment" name="comment" placeholder="Commentaire"></ion-textarea>

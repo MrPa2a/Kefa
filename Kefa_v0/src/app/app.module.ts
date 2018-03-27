@@ -6,6 +6,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { ElementPage } from "../pages/element/element";
+import { FilterPage } from "../pages/filter/filter";
 
 import { Geolocation } from '@ionic-native/geolocation';
 
@@ -31,7 +32,8 @@ const firebaseConfig = {
     MyApp,
     HomePage,
     ListPage,
-    ElementPage
+    ElementPage,
+    FilterPage
   ],
   imports: [
     BrowserModule,
@@ -45,11 +47,13 @@ const firebaseConfig = {
     MyApp,
     HomePage,
     ListPage,
-    ElementPage
+    ElementPage,
+    FilterPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    HomePage,
     Geolocation,
     FirebaseProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler},

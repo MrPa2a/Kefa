@@ -29,8 +29,14 @@ page-home {
       height: 50%;
     }
 
+    #container-title {
+      display: flex;
+      height: 50px;
+    }
+
     #container-logo {
       display: inline-block;
+      margin: auto;
     }
 
     #app-logo {
@@ -47,8 +53,10 @@ page-home {
     }
 
     #button-filter {
-      height: 20px;
-      width: 20px;
+      float: left;
+      height: 50px;
+      width: 50px;
+      background: none;
     }
 
     .swiper-pagination-bullet {
