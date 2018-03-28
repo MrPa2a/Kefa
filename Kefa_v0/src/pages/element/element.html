@@ -15,45 +15,43 @@
 
 <ion-content>
   <ion-card [ngStyle]="{'background-image': 'url(' + place.image + ')'}" class="container-card">
+  </ion-card>
 
-    <div class="card-icon">
-
-      <div>
-        <button ion-button item-start clear small color="light" icon-start>
+  <ion-card>
+    <ion-row>
+      <ion-col align-self-center text-center>
+        <button ion-button item-start clear large color="kefa" icon-start>
           <ion-icon name='star'></ion-icon>
-          Note moyenne
-          <ion-badge item-end color="kefa" outline style="margin-left: 5px;">{{ place.averageNote }}</ion-badge>
+          <ion-badge item-end color="kefa" outline large style="margin-left: 5px;">{{ place.averageNote }}</ion-badge>
         </button>
-      </div>
-
-      <div>
-        <button ion-button item-end clear small color="light" icon-start>
-          <ion-icon name='stats'></ion-icon>
-          Avis
-          <ion-badge item-end color="kefa" outline style="margin-left: 5px;">{{ place.sumOpinions }}</ion-badge>
+      </ion-col>
+      <ion-col align-self-center text-center>
+        <button *ngIf="place.type" ion-button clear  color="kefa" icon-right>
+          Type
+          <ion-icon large name='{{place.type}}'></ion-icon>
         </button>
-      </div>
-
-      <div>
-        <button ion-button item-end clear small color="light" icon-start>
+      </ion-col>
+      <ion-col align-self-center text-center>
+        <button ion-button item-end clear  color="kefa" icon-start>
           <ion-icon name='logo-euro'></ion-icon>
-          Prix
           <ion-badge item-end color="kefa" outline style="margin-left: 5px;">{{ place.price }}</ion-badge>
         </button>
-      </div>
+      </ion-col>
+    </ion-row>
+  </ion-card>
 
-      <ion-fab *ngIf="place.type" right top class="fab-icon">
-        <button ion-fab small clear outline color="kefa">
-          <ion-icon name="{{place.type}}"></ion-icon>
-        </button>
-      </ion-fab>
-    </div>
+  <ion-card>
+    <ion-card-header>
+      {{place.name}}
+    </ion-card-header>
 
-    <div class="card-infos" margin>
-      <h2>{{ place.name }}</h2>
-      <p>{{ place.address }}</p>
-      <p>{{ place.description }}</p>
-    </div>
+    <ion-card-header>
+      {{place.address}}
+    </ion-card-header>
+
+    <ion-card-content>
+      {{place.description}}
+    </ion-card-content>
   </ion-card>
 
   <ion-card *ngIf="!place.opinions">
