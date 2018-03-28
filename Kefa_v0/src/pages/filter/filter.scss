@@ -4,4 +4,10 @@ page-filter {
     float: left;
     margin: 5px;
   }
+
+  #container-activities ion-label div {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap
+  }
 }

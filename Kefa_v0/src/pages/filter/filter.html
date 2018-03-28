@@ -16,13 +16,15 @@
 <ion-content padding>
   <ion-label class="question">Filtres</ion-label>
   <ion-list no-lines>
-    <ion-item>
-      <button [style.color]="setColor(activity)" [style.background-color]="setButtonColor(activity)" class="button-activity" *ngFor="let activity of possibleActivies" ion-fab small clear outline (click)="toggleActivity(activity)">
-        <ion-icon name="{{activity}}"></ion-icon>
-      </button>
+    <ion-item id="container-activities">
+      <div>
+        <button [style.color]="setColor(activity)" [style.background-color]="setButtonColor(activity)" class="button-activity" *ngFor="let activity of possibleActivies" ion-fab small clear outline (click)="toggleActivity(activity)">
+          <ion-icon name="{{activity}}"></ion-icon>
+        </button>
+      </div>
     </ion-item>
     <ion-item>
-      <ion-range min="0" max="100" pin="true" [(ngModel)]="filter.price">
+      <ion-range min="0" max="200" step="5" pin="true" [(ngModel)]="filter.price">
         <ion-icon range-right name="logo-euro"></ion-icon>
       </ion-range>
     </ion-item>

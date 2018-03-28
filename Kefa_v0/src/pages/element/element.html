@@ -18,7 +18,7 @@
 
     <div class="card-icon">
 
-      <div class="info-note">
+      <div>
         <button ion-button item-start clear small color="light" icon-start>
           <ion-icon name='star'></ion-icon>
           Note moyenne
@@ -26,11 +26,19 @@
         </button>
       </div>
 
-      <div class="info-avis">
+      <div>
         <button ion-button item-end clear small color="light" icon-start>
           <ion-icon name='stats'></ion-icon>
           Avis
           <ion-badge item-end color="kefa" outline style="margin-left: 5px;">{{ place.sumOpinions }}</ion-badge>
+        </button>
+      </div>
+
+      <div>
+        <button ion-button item-end clear small color="light" icon-start>
+          <ion-icon name='logo-euro'></ion-icon>
+          Prix
+          <ion-badge item-end color="kefa" outline style="margin-left: 5px;">{{ place.price }}</ion-badge>
         </button>
       </div>
 
