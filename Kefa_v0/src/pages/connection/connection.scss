@@ -1,0 +1,13 @@
+page-connection {
+  ion-navbar > div {
+    display: flex;
+  }
+
+  .button-navbar {
+    height: 50px;
+    width: 50px;
+    background: none;
+    float: right;
+    display: inline;
+  }
+}

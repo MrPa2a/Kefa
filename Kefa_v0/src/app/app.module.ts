@@ -7,6 +7,8 @@ import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { ElementPage } from "../pages/element/element";
 import { FilterPage } from "../pages/filter/filter";
+import { ConnectionPage } from "../pages/connection/connection";
+import { RegistrationPage } from "../pages/registration/registration";
 
 import { Geolocation } from '@ionic-native/geolocation';
 
@@ -33,7 +35,9 @@ const firebaseConfig = {
     HomePage,
     ListPage,
     ElementPage,
-    FilterPage
+    FilterPage,
+    ConnectionPage,
+    RegistrationPage
   ],
   imports: [
     BrowserModule,
@@ -48,7 +52,9 @@ const firebaseConfig = {
     HomePage,
     ListPage,
     ElementPage,
-    FilterPage
+    FilterPage,
+    ConnectionPage,
+    RegistrationPage
   ],
   providers: [
     StatusBar,

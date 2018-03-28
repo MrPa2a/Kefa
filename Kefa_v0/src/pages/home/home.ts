@@ -5,6 +5,7 @@ import { FirebaseProvider } from './../../providers/firebase/firebase';
 import { NativeGeocoder, NativeGeocoderForwardResult } from '@ionic-native/native-geocoder';
 import { ElementPage } from "../element/element";
 import { FilterPage } from "../filter/filter";
+import { ConnectionPage } from "../connection/connection";
 
 declare var google;
 
@@ -17,6 +18,13 @@ export interface FilterData {
   range: number,
   price: number,
   activities: Array<string>
+}
+
+export interface UserData {
+  email: string,
+  firstName: string,
+  lastName: string,
+  password: string
 }
 
 @Injectable()
@@ -43,6 +51,12 @@ export class HomePage {
   range: number = undefined;
   currentIndex: number = 0;
   filter: FilterData;
+  user: UserData/* = {
+    email: "vincentcreusy@gmail.com",
+    firstName: "Vincent",
+    lastName: "Creusy",
+    password: "vincent"
+  };*/
 
   readonly DEFAULT_RANGE: number = 0;
   readonly DEFAULT_PRICE: number = 50;
@@ -118,7 +132,6 @@ export class HomePage {
     else {
       for (let place of this.placesItems) {
         this.getCoordinatesFromAdress(place.address).then((position) => {
-          console.log('Distance between ' + position + ' : ' + this.distanceOnMap(this.userPosition, position))
           if (this.distanceOnMap(this.userPosition, position) > this.filter.range / 1000) {
             this.tempPlacesItems.splice(this.tempPlacesItems.indexOf(place), 1)
           }
@@ -157,7 +170,8 @@ export class HomePage {
   showElement(place) : void {
     this.navCtrl.push(ElementPage, {
       place: place,
-      index: this.currentIndex
+      index: this.currentIndex,
+      user: this.user
     });
   }
 
@@ -170,6 +184,17 @@ export class HomePage {
 
     this.navCtrl.push(FilterPage, {
       filter: this.filter
+    });
+  }
+
+  showConnection() : void {
+    this.events.subscribe('user-event', (paramsVar) => {
+      this.user = paramsVar;
+      this.events.unsubscribe('user-event');
+    });
+
+    this.navCtrl.push(ConnectionPage, {
+      user: this.user
     });
   }
 
@@ -206,8 +231,12 @@ export class HomePage {
   }
 
   slideChanged() : void {
-    this.currentIndex = this.slides.getActiveIndex();
-    this.addMarkerWithPlace(this.tempPlacesItems[this.currentIndex]);
+    let index = this.slides.getActiveIndex();
+
+    if (index < this.tempPlacesItems.length) {
+      this.currentIndex = this.placesItems.indexOf(this.tempPlacesItems[index])
+      this.addMarkerWithPlace(this.tempPlacesItems[index]);
+    }
   }
 
   loadMap() : void {
@@ -269,31 +298,6 @@ export class HomePage {
     var d = R * c; // Distance in km
     return d;
   }
-
-  /*distanceOnMap(position1: Coordinates, position2: Coordinates) {
-    var p = 0.017453292519943295;    // Math.PI / 180
-    var c = Math.cos;
-    let lat1 = position1.lat;
-    let lon1 = position1.lng;
-    let lat2 = position2.lat;
-    let lon2 = position2.lng;
-    var a = 0.5 - c((lat2 - lat1) * p)/2 +
-            c(lat1 * p) * c(lat2 * p) *
-            (1 - c((lon2 - lon1) * p))/2;
-
-    return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
-  }
-
-  /*distanceOnMap(position1: Coordinates, position2: Coordinates) : number {
-    let R = 6378000
-
-    let lat_a = this.degreeToRad(position1.lat);
-    let lon_a = this.degreeToRad(position1.lng);
-    let lat_b = this.degreeToRad(position2.lat);
-    let lon_b = this.degreeToRad(position2.lng);
-
-    return R * (Math.PI/2 - Math.asin( Math.sin(lat_b) * Math.sin(lat_a) + Math.cos(lon_b - lon_a) * Math.cos(lat_b) * Math.cos(lat_a)))
-  }*/
 
   getCoordinatesFromAdress(address: string) : Promise<any> {
     return new Promise((resolve, reject) => {

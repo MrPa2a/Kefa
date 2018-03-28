@@ -1,14 +1,17 @@
 <ion-header>
   <ion-navbar>
-    <button id="button-filter" (click)="showFilter()">
-      <img name="menu" src="assets/imgs/filter.png"/>
+    <button class="button-navbar" (click)="showFilter()">
+      <img name="menu" src="assets/imgs/filter.png" />
     </button>
     <ion-title text-center id="container-title">
       <div id="container-logo">
-        <img id="app-logo" src="assets/imgs/logo-small.png"/>
+        <img id="app-logo" src="assets/imgs/logo-small.png" />
         <div id="app-name">Kefa</div>
       </div>
     </ion-title>
+    <button class="button-navbar" (click)="showConnection()">
+      <ion-icon name="person" color="kefa"><p *ngIf="user">{{user.firstName | slice:0:4}}{{user.firstName.length < 4 ? '' : '.'}}<p></ion-icon>
+    </button>
   </ion-navbar>
 </ion-header>
 

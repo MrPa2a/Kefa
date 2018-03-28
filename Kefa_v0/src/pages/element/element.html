@@ -71,20 +71,30 @@
     </ion-card-content>
   </ion-card>
 
-  <form (ngSubmit)="logForm()" margin>
-    <h2>Ajouter un commentaire</h2>
-    <ion-item>
-      <ion-select [(ngModel)]="form.note" interface="action-sheet" name="title" placeholder="Note" cancelText="Annuler">
-        <ion-option value="1">1</ion-option>
-        <ion-option value="2">2</ion-option>
-        <ion-option value="3">3</ion-option>
-        <ion-option value="4">4</ion-option>
-        <ion-option value="5">5</ion-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-textarea [(ngModel)]="form.comment" name="comment" placeholder="Commentaire"></ion-textarea>
-    </ion-item>
-    <button ion-button type="submit" block>Ajouter le commentaire</button>
-  </form>
+  <ion-card padding *ngIf="!this.user">
+    Vous devez être connecté pour ajouter un commentaire.
+  </ion-card>
+
+  <div *ngIf="this.user">
+    <ion-card padding *ngIf="!isAbleToComment">
+      Vous avez déjà laissé un commentaire sur cette activité.
+    </ion-card>
+
+    <form (ngSubmit)="logForm()" margin *ngIf="isAbleToComment">
+      <h2>Ajouter un commentaire</h2>
+      <ion-item>
+        <ion-select [(ngModel)]="form.note" interface="action-sheet" name="title" placeholder="Note" cancelText="Annuler" required>
+          <ion-option value="1">1</ion-option>
+          <ion-option value="2">2</ion-option>
+          <ion-option value="3">3</ion-option>
+          <ion-option value="4">4</ion-option>
+          <ion-option value="5">5</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-textarea [(ngModel)]="form.comment" name="comment" placeholder="Commentaire" required></ion-textarea>
+      </ion-item>
+      <button ion-button type="submit" block>Ajouter le commentaire</button>
+    </form>
+  </div>
 </ion-content>

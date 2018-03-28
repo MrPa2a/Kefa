@@ -1,0 +1,59 @@
+<!--
+  Generated template for the ConnectionPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>connection</ion-title>
+    <button class="button-navbar" (click)="disconnectUser()" *ngIf="user">
+      <ion-icon name="exit" color="kefa"></ion-icon>
+    </button>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-card padding *ngIf="user">
+    Vous êtes déjà connecté avec l'adresse mail {{ user.email }}
+  </ion-card>
+
+  <div *ngIf="!user">
+    <ion-card padding *ngIf="errorMessage">
+      {{ errorMessage }}
+    </ion-card>
+
+    <ion-item>
+      <ion-label>Inscription</ion-label>
+      <ion-checkbox [(ngModel)]="registration"></ion-checkbox>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Adresse mail :</ion-label>
+      <ion-input [(ngModel)]="email" type="email" required></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="registration">
+      <ion-label>Prénom :</ion-label>
+      <ion-input [(ngModel)]="firstName" required></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="registration">
+      <ion-label>Nom :</ion-label>
+      <ion-input [(ngModel)]="lastName" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Mot de passe :</ion-label>
+      <ion-input [(ngModel)]="password" type="password" required></ion-input>
+    </ion-item>
+
+    <ion-list padding>
+      <button ion-button block (click)="connectUser()" *ngIf="!registration">Se connecter</button>
+      <button ion-button block (click)="registerUser()" *ngIf="registration">S'inscrire</button>
+    </ion-list>
+  </div>
+</ion-content>

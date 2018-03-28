@@ -57,8 +57,6 @@ export class FilterPage {
     else {
       this.filter.activities.push(activity)
     }
-
-    console.log(this.filter.activities)
   }
 
   setColor(activity: string) : string {

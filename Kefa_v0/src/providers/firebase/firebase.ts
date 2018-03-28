@@ -10,8 +10,15 @@ export class FirebaseProvider {
     return this.afd.list<any>('/placesItems/').valueChanges();
   }
 
+  getUserAccounts() {
+    return this.afd.list<any>('/userAccounts/').valueChanges();
+  }
+
+  registerUser(id, userData) {
+    return this.afd.database.ref().child('userAccounts').child(id).set(userData)
+  }
+
   addComment(id, newId, comment) {
-    //let opinions = this.afd.list('/placesItems/' + id + '/opinions/')
     this.afd.database.ref().child('placesItems').child(id).child('opinions').child(newId).set(comment)
   }
 
